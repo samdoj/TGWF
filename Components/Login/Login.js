@@ -107,3 +107,5 @@ class LoginComponent extends Component {
 
 const Login = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
 export default Login;
+
+//Comment to test commit
