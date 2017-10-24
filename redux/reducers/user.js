@@ -1,4 +1,4 @@
-const initialState = { userName: '', password: '', isValidUser: 'initial' };
+const initialState = { userName: '', password: '', isValidUser: 'initial', secondsToWait: 0, interval: null };
 
 const userReducer = function (state = initialState, action = {}) {
 
@@ -30,6 +30,24 @@ const userReducer = function (state = initialState, action = {}) {
           return Object.assign({}, state, { isValidUser: valid });
 
         }
+        break;
+        case 'TIMER_UPDATE':
+        {   if (action.seconds === 0)
+        {
+            clearInterval(state.interval);
+            return Object.assign({}, state, {secondsToWait: action.seconds, interval: null, isValidUser:'reset'})
+        }
+        else
+                return Object.assign({}, state, {secondsToWait: action.seconds})
+
+        }
+         break;
+        case 'TIMER_CREATE':
+        {
+            return Object.assign({}, state, {secondsToWait: action.seconds, interval: action.interval})
+        }
+        break;
+
 
       default:
         {

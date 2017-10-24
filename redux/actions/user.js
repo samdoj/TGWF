@@ -32,3 +32,19 @@ export function hasError(bool) {
   };
 }
 
+export function updateLoginTimer(seconds)
+{
+  return {
+    type: 'TIMER_UPDATE',
+    seconds,
+  };
+}
+
+export function createLoginTimer(seconds, interval)
+{
+  return {
+        type: 'TIMER_CREATE',
+        seconds,
+        interval,
+      };
+}
