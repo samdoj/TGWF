@@ -17,8 +17,10 @@ function mapStateToProps(state) {
   console.log('STATE IS ');
   console.dir(state);
   return { userName: userReducer.userName,
-      password: userReducer.password, validUser:
-      userReducer.isValidUser, secondsToWait: userReducer.secondsToWait, interval: userReducer.interval, };
+      password: userReducer.password,
+      validUser: userReducer.isValidUser,
+      secondsToWait: userReducer.secondsToWait,
+      interval: userReducer.interval, };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -70,7 +72,8 @@ class LoginComponent extends Component {
   render() {
     if (this.props.validUser === TRIES && !this.props.interval)
     {
-      this.props.createLoginTimer(SECONDS, setInterval(()=> this.props.updateLoginTimer(this.props.secondsToWait - 1), 1000));
+      this.props.createLoginTimer
+      (SECONDS, setInterval(()=> this.props.updateLoginTimer(this.props.secondsToWait - 1), 1000));
     }
 
     const { validUser, } = this.props;
