@@ -124,7 +124,7 @@ class LoginComponent extends Component {
             <TextInput style={styles.droidInput}
                        onChangeText = {(text)=>this.changeText(text, 'userName')}/>
             </View>
-            <View style = {{ height: 20, flexDirection: 'row' }}>
+            <View style = {styles.entryView}>
                 <Text style = {styles.entryText}>Password: </Text>
                 <TextInput style={styles.droidInput}
                          onChangeText = {(text)=>this.changeText(text, 'password')}
