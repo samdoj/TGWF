@@ -1,14 +1,15 @@
 // jscs:disable 'super' outside of function or class (10
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, Image, ImageBackground } from 'react-native';
+import {
+    Text, TextInput, View, Button, ImageBackground, } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, } from 'redux';
 import * as Actions from '../../redux/actions/user';
 import * as Animatable from 'react-native-animatable';
-import TouchableItem from 'react-navigation/lib-rn/views/TouchableItem';
+import styles from'../Login/Styles/Styles.js';
 
-const TRIES = 3;
-const SECONDS = 30;
+const TRIES = 2;
+const SECONDS = 10;
 const ANIMATION_TIME  = 100;
 
 function mapStateToProps(state) {
@@ -111,43 +112,46 @@ class LoginComponent extends Component {
 
     return (
         <ImageBackground style = {{ flex: 1, zIndex: 1 }} source={require('../../assets/images/iceberg.jpg')}>
-      <Animatable.View style={{ flex: 3, paddingVertical: 20, paddingHorizontal: 20,  justifyContent: 'center', backgroundColor:'transparent' }}
+      <Animatable.View style={styles.mainContainer}
         ref = "LoginView"  >
 
-            <View style = {{ height: 20, marginBottom: 10, flexDirection: 'row', backgroundColor:'transparent' }}>
-            <Text style={{ flex: 1, fontSize: 20, backgroundColor: 'transparent' }}>Username: </Text>
-            <TextInput style={{ flex: 2, alignSelf: 'stretch', maxHeight: 30, backgroundColor: 'white' }}
+            <View style = {styles.entryView}>
+            <Text style={styles.entryText}>Username: </Text>
+            <TextInput style={styles.droidInput}
                        onChangeText = {(text)=>this.changeText(text, 'userName')}/>
             </View>
-            <View style = {{ height: 20, flexDirection: 'row' }}>
-                <Text style = {{ flex: 1, fontSize: 20, backgroundColor: 'transparent' }}>Password: </Text>
-                <TextInput style={{ flex: 2, alignSelf: 'stretch', maxHeight: 30, backgroundColor: 'white' }}
+            <View style = {styles.entryView}>
+                <Text style = {styles.entryText}>Password: </Text>
+                <TextInput style={styles.droidInput}
                          onChangeText = {(text)=>this.changeText(text, 'password')}
                              secureTextEntry={true}/>
 
 
             </View>
+          <View style={{ padding: 20 }}>
             <Button onPress = {()=> {this.tryUserLogin();}
-          } title="Login" style = {{ color : 'black' }}/>
-          <Text style = {{ color: 'red', fontSize: 20, backgroundColor: 'transparent', }}>
+            }
+                    title="Login"
+                    color={0x0000ffaf}
+            />
+          </View>
+          <Text style = {styles.errorText}>
               {!(validUser === 'initial' || validUser === 'reset') ? 'Invalid username or password.  Please try again.  You have' +
                   ` ${TRIES - (typeof this.props.validUser === 'number' ? this.props.validUser : 0)} attempts remaining` : null }
           </Text>
         </Animatable.View>
-        <Animatable.View style = {{ paddingHorizontal:20, opacity: 0, flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', zIndex: 11, zIndex: -1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }} ref = "WaitView">
-            <Text style = {{ fontSize: 20, color: 'red', backgroundColor: 'transparent',}}>
-                You have made too many incorrect login attempts.  You must wait {this.props.secondsToWait} seconds before trying again or {' '}
-
-                <TouchableItem style={{ width: 100, height: 20, alignContent: 'stretch', backgroundColor: 'transparent' } }>
-                <Text style = {{ fontSize: 20, color: 'blue', textDecorationLine: 'underline', backgroundColor: 'transparent', alignContent: 'stretch' }}>
-                     Click Here
-                </Text>
-
-            </TouchableItem>
-                {'if you have forgotten your password'}
-            </Text>
-
-
+        <Animatable.View style = {styles.noMoreTries} ref = "WaitView">
+          <Text style={ styles.errorText } >
+              You have entered an incorrect username and password combination too many times. You must wait{' ' + this.props.secondsToWait + ' seconds '}
+              or reset your password.
+          </Text>
+            <View style={{ padding: 20 }}>
+            <Button onPress = {()=> {this.sendMail();}
+            }
+                    title="Reset Password"
+                    color={0x0000ffaf}
+            />
+            </View>
         </Animatable.View>
         </ImageBackground>
 
