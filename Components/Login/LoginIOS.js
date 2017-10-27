@@ -106,7 +106,7 @@ class LoginComponent extends Component {
     console.dir(this.state);
     if (validUser === true) {
       return (
-          <View style={{ flex: 1, backgroundColor: 0x5bf1e9ff }}>
+          <View style={{ flex: 1, backgroundColor: 0x5bf1e903 }}>
 
                   <Text>Hello world!</Text>
               </View>
@@ -114,8 +114,7 @@ class LoginComponent extends Component {
     }
 
     return (
-        <ImageBackground style = {{ flex: 1, zIndex: 1 }}
-                         source={require('../../assets/images/iceberg.jpg')}>
+        <View style={{flex:1}}>
       <Animatable.View style={styles.mainContainer}
         ref = "LoginView"  >
 
@@ -135,7 +134,8 @@ class LoginComponent extends Component {
             <Button onPress = {()=> {this.tryUserLogin();}
           } title="Login" style = {{ color: 'black' }}/>
           <Text style = {styles.errorText}>
-              {!(validUser === 'initial' || validUser === 'reset') ? 'Invalid username or password.  Please try again.  You have' +
+              {!(validUser === 'initial' || validUser === 'reset') ?
+                  'Invalid username or password.  Please try again.  You have' +
                   ` ${TRIES - (typeof this.props.validUser === 'number' ? this.props.validUser : 0)} attempts remaining` : null }
           </Text>
         </Animatable.View>
@@ -154,7 +154,7 @@ class LoginComponent extends Component {
 
 
         </Animatable.View>
-        </ImageBackground>
+        </View>
 
   );
   }
