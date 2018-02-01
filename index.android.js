@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {
-    AppRegistry, View, Text
+    AppRegistry, View, Text, ImageBackground
 } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -9,6 +9,8 @@ import Login from './Components/Login/LoginDroid';
 import userReducer from './redux/reducers/user';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import Donation from './Screens/Donation';
+import Contribute from './Screens/Contribute';
 // noinspection JSAnnotator
 
 if (console.dir) {
@@ -28,9 +30,11 @@ export default class tgwf extends Component {
   render() {
     return (
         <Provider store={store}>
-
-              <Login />
-            </Provider>);
+            <ImageBackground style = {{ flex: 1, zIndex: 1 }}
+                             source={require('./assets/images/iceberg.jpg')}>
+                <Login/>
+            </ImageBackground>
+        </Provider>);
   }
 }
 

@@ -26,7 +26,7 @@ export default StyleSheet.create(
                 flexDirection: 'row',
                 backgroundColor: 'transparent',
               },
-        droidInput:
+        entry:
             { flex: 2,
                 alignSelf: 'stretch',
                 minHeight: 30,

@@ -1,5 +1,5 @@
 import React, { Component }from 'react';
-import { Text, TextInput, View, Button } from 'react-native';
+import { Text, TextInput, View, Button, Platform } from 'react-native';
 import styles from '../AppStyles/Styles';
 
 const fields =
@@ -19,7 +19,11 @@ const TextFields =
              {
           return (
 
-                  <Button title="Donate" key = "Button"  onPress={()=> {}} style={{ alignSelf: 'flex-start' }}/>
+                 Platform.OS ==='ios' ? <Button title="Donate" key = "Button" color="blue" onPress={()=> {}} style={{ alignSelf: 'flex-start' }}/> :
+
+                         <Button title="Donate" key="Button" color={0x0000ffaf} onPress={()=>{}} style={{alignSelf:'flex-start'}}/> : null
+
+
 
           );
         }
@@ -30,7 +34,7 @@ const TextFields =
                 <Text style = {styles.entryText}>
                     {field}
                 </Text>
-                <TextInput style = {styles.droidInput} ></TextInput>
+                <TextInput style = {styles.entry} ></TextInput>
 
             </View>
         );
@@ -45,7 +49,6 @@ class Donation extends Component
 
 <View style = {styles.mainContainer}>
             {TextFields}
-            <Button title="Donate"  color='transparent' onPress={()=> {} }/>
         </View>
 
     );

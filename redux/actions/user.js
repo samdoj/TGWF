@@ -19,16 +19,28 @@ export function setHashedPassword(hashedPassword) {
 }
 
 export function isValidUser(userName, password) {
-  return {
-    type: 'USER_VALID',
-    valid: userName === USERNAME && password === PASSWORD,
+  return function action(dispatch) {
+    dispatch({ type: 'CHECK_USER_VALID', });
+    fetch('http://www.tgwf.org//wp-json/jwt-auth/v1/token',
+      { method: 'POST',
+
+          body: JSON.stringify({"username": userName, "password": password }), }).then((response) => console.log(response)).catch((err)=>console.log(err));
   };
 }
 
-export function hasError(bool) {
+export function setUserValid(bool)
+{
+  return {
+    type: 'USER_VALID',
+    valid: bool,
+  };
+}
+
+export function hasError(bool, message) {
   return {
     type: 'USER_ERROR',
     error: bool,
+    message,
   };
 }
 

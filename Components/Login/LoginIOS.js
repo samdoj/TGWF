@@ -120,12 +120,12 @@ class LoginComponent extends Component {
 
             <View style = {styles.entryView}>
             <Text style={styles.entryText}>Username: </Text>
-            <TextInput style={styles.droidInput}
+            <TextInput style={styles.entry}
                        onChangeText = {(text)=>this.changeText(text, 'userName')}/>
             </View>
             <View style = {styles.entryView}>
                 <Text style = {styles.entryText}>Password: </Text>
-                <TextInput style={styles.droidInput}
+                <TextInput style={styles.entry}
                          onChangeText = {(text)=>this.changeText(text, 'password')}
                              secureTextEntry={true}/>
 
