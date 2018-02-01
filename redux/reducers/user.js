@@ -1,4 +1,10 @@
-const initialState = { userName: '', password: '', isValidUser: 'initial', secondsToWait: 0, interval: null };
+const initialState =
+    {userName: '',
+        password: '',
+        isValidUser: 'initial',
+        secondsToWait: 0,
+        interval: null,
+        token: null};
 
 const userReducer = function (state = initialState, action = {}) {
 
@@ -47,7 +53,11 @@ const userReducer = function (state = initialState, action = {}) {
             return Object.assign({}, state, {secondsToWait: action.seconds, interval: action.interval})
         }
         break;
-
+        case 'USER_TOKEN':
+        {
+            return Object.assign({},state, {token: action.token})
+        }
+        break;
 
       default:
         {

@@ -35,11 +35,15 @@ export function isValidUser(userName, password) {
           //console.log(json);
           console.log(json.token);
           dispatch(setUserValid(json.token!==undefined));
+          if(json.token)
+          {
+              dispatch(captureToken(json.token));
+          }
               })
     }).catch((err)=>
     {
       console.log(err);
-      hasError(true, err);
+      dispatch(hasError(true, err));
     });
   };
 }
@@ -52,6 +56,13 @@ export function setUserValid(bool)
   };
 }
 
+export function captureToken(token)
+{
+    return {
+        type: 'USER_TOKEN',
+        token
+    }
+}
 export function hasError(bool, message) {
   return {
     type: 'USER_ERROR',
