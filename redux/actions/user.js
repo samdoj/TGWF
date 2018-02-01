@@ -2,7 +2,8 @@ import { dispatch } from 'redux-thunk';
 
 const USERNAME = 'Jodde';
 const PASSWORD = 'rocks!!';
-
+//const URL = 'https://jsonplaceholder.typicode.com/posts/';
+const URL = 'http://www.theglobalwarmingfoundation.org/wp-json/jwt-auth/v1/token';
 export function setUserName(name) {
   return {
     type: 'USER_NAME',
@@ -21,10 +22,25 @@ export function setHashedPassword(hashedPassword) {
 export function isValidUser(userName, password) {
   return function action(dispatch) {
     dispatch({ type: 'CHECK_USER_VALID', });
-    fetch('http://www.tgwf.org//wp-json/jwt-auth/v1/token',
-      { method: 'POST',
-
-          body: JSON.stringify({"username": userName, "password": password }), }).then((response) => console.log(response)).catch((err)=>console.log(err));
+    let options = {};
+    options.body =  JSON.stringify({username:userName, password});
+    options.headers = {
+      "content-type": 'application/json',
+        accept: 'application/json',
+    };
+    options.method = 'POST';
+    fetch(URL, options).then((response) => {
+        response.json().then((json) =>
+        {
+          //console.log(json);
+          console.log(json.token);
+          setUserValid(json.token); //The server sends back a token if a valid username and password are entered.  Else the login attempt is invalid.
+        })
+    }).catch((err)=>
+    {
+      console.log(err);
+      hasError(true, err);
+    });
   };
 }
 
