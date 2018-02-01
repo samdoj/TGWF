@@ -34,8 +34,8 @@ export function isValidUser(userName, password) {
         {
           //console.log(json);
           console.log(json.token);
-          setUserValid(json.token); //The server sends back a token if a valid username and password are entered.  Else the login attempt is invalid.
-        })
+          dispatch(setUserValid(json.token!==undefined));
+              })
     }).catch((err)=>
     {
       console.log(err);
