@@ -63,11 +63,11 @@ export function captureToken(token)
         token
     }
 }
-export function hasError(bool, message) {
+export function hasError(bool, errorMessage) {
   return {
     type: 'USER_ERROR',
     error: bool,
-    message,
+    errorMessage: errorMessage.message
   };
 }
 

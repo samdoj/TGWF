@@ -2,13 +2,25 @@ const initialState =
     {userName: '',
         password: '',
         isValidUser: 'initial',
+        loginAttempts: 0,
         secondsToWait: 0,
         interval: null,
-        token: null};
+        token: null,
+        errorMessage: ""};
 
 const userReducer = function (state = initialState, action = {}) {
 
     switch (action.type) {
+        case 'USER_ERROR':
+        {
+            return Object.assign({}, state, { errorMessage: action.errorMessage});
+
+        }
+        break;
+        case 'USER_REFRESH':
+        {
+            return Object.assign({}, state, {isValidUser: 'initial'})
+        }
       case 'USER_NAME':
         {
           return Object.assign({}, state, { userName: action.userName });
@@ -28,12 +40,15 @@ const userReducer = function (state = initialState, action = {}) {
       case 'USER_VALID':
         {
           let valid = action.valid;
-          if (typeof state.isValidUser === 'number' && !valid) {
-            valid = state.isValidUser + 1;
-          } else if (!valid && typeof state.isValidUser === 'boolean')
-              valid = 1;
-          console.log('Valid? ' + valid);
-          return Object.assign({}, state, { isValidUser: valid });
+          if (valid === 'initial')
+              return Object.assign({}, state, { isValidUser: valid, });
+
+            let loginAttempts;
+          if (!valid) {
+            loginAttempts = state.loginAttempts + 1;
+          }
+          else loginAttempts=4;
+          return Object.assign({}, state, { isValidUser: valid, loginAttempts: loginAttempts });
 
         }
         break;
@@ -41,7 +56,7 @@ const userReducer = function (state = initialState, action = {}) {
         {   if (action.seconds === 0)
         {
             clearInterval(state.interval);
-            return Object.assign({}, state, {secondsToWait: action.seconds, interval: null, isValidUser:'reset'})
+            return Object.assign({}, state, {secondsToWait: action.seconds, interval: null, isValidUser:'reset', loginAttempts:0})
         }
         else
                 return Object.assign({}, state, {secondsToWait: action.seconds})
