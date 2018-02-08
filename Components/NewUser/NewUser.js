@@ -93,16 +93,44 @@ export default class NewUser extends Component
     fetch('http://www.theglobalwarmingfoundation.org/newuser1.php', options).
     then((msg)=> {
         console.log(msg.status);
-        if (msg.status !== 200) {
-          alert('There was a network error.  Please try again.' + global.runCount);
-          this.setState({ status: msg.status });
-
-        } else
+        switch (msg.status)
         {
-          this.networkSuccess();
-        }
-      });
+        case 200:
+          {
+            this.networkSuccess();
+          }
 
+        break;
+
+        case 404:
+          {
+            alert('The file could not be found.' +
+                ' This probably means your Internet connection isn\'t working properly.');
+          }
+
+        break;
+        case 401:
+          {
+            alert('You already seem to have a user account.' +
+                ' Email jtmason@tgwf.org for a password reset if you have forgotten your password');
+          }
+
+        break;
+        case 403:
+          {
+            alert('There seems to be a problem with the server. Please try again later.');
+          }
+
+        break;
+        default:
+          {
+            alert('An unknown error occurred.  Please try again later.');
+          }
+      }
+
+      }).catch(() => alert('A network error occured.' +
+        ' You seem to be unconnected to the Internet.' +
+    ' Please make sure either your WiFi or mobile data connection is turned on.'));
   }
 
   constructor()
