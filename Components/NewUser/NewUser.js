@@ -6,10 +6,12 @@ import * as Actions from '../../redux/actions/user';
 import styles from'../Login/Styles/Styles.js';
 export default class NewUser extends Component
 {
+  //TODO: Trigger the login action
+  // with the new username and password upon successful creation of a user.
 
   networkSuccess()
   {
-    alert('Success!');
+    alert('User created successfully!');
   }
 
   shouldShowConfirm() {
@@ -105,7 +107,7 @@ export default class NewUser extends Component
         case 404:
           {
             alert('The file could not be found.' +
-                ' This probably means your Internet connection isn\'t working properly.');
+                ' This probably our server is temporarily down.  Please try again later.');
           }
 
         break;
