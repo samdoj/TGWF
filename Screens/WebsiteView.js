@@ -3,13 +3,26 @@ import { WebView } from 'react-native';
 
 class WebsiteView extends Component
 {
-  render()
+  constructor(props)
   {
-    return (
-  <WebView
-  ref = "WebView"
-  source = {{ uri: 'http://www.tgwf.org' }}
-  />);
+    super(props);
+    this.state =
+        { uri: props.lostPassword ?
+            'http://www.theglobalwarmingfoundation.org/wp-login.php?action=lostpassword'
+            : 'http://www.tgwf.org', };
+
   }
 
-}export default  WebsiteView;
+  render()
+  {
+
+    return (
+<WebView
+ref = "WebView"
+source = {{ uri: this.state.uri } }
+
+/>);
+  }
+
+}
+export default  WebsiteView;

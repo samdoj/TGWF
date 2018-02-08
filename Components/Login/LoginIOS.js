@@ -93,10 +93,6 @@ class LoginComponent extends Component {
     this.props.checked = true;
   }
 
-  componentWillMount() {
-    console.log('Trying to mount');
-  }
-
   componentDidUpdate()
   {
     const { validUser, } = this.props;

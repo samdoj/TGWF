@@ -17,6 +17,7 @@ import { createLogger } from 'redux-logger';
 import WebsiteView from "./Screens/WebsiteView";
 import Donation from "./Screens/Donation";
 import Contribute from "./Screens/Contribute";
+import NewUser from "./Components/NewUser/NewUser";
 
 
 // invoke API directly when in need
@@ -40,7 +41,7 @@ export default class tgwf extends Component {
       <Provider store={store}>
           <ImageBackground style = {{ flex: 1, zIndex: 1 }}
                            source={require('./assets/images/iceberg.jpg')}>
-            <Login/>
+            <NewUser/>
           </ImageBackground>
       </Provider>);
   }
