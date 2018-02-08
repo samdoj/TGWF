@@ -37,7 +37,16 @@ export default class Contribute extends Component
                     Article:
                 </Text>
             <TextInput
-                style={{ flex: 1, minHeight: 200, maxHeight: 250, minWidth: 100, backgroundColor: 0xffffffff, marginVertical: 10, fontSize: 20, textAlignVertical: 'top', alignContent: 'flex-start' }}
+                style={
+                    { flex: 1,
+                        minHeight: 200,
+                        maxHeight: 250,
+                        minWidth: 100,
+                        backgroundColor: 0xffffffff,
+                        marginVertical: 10,
+                        fontSize: 20,
+                        textAlignVertical: 'top',
+                        alignContent: 'flex-start', }}
                 multiRow={true}
                 clearTextOnFocus={true}
             >
@@ -45,8 +54,13 @@ export default class Contribute extends Component
             </TextInput>
                 <Text style = {{ fontSize: 18,
                     marginBottom: 5, }}>
-                    * We reserve the right to edit any content for brevity or clarity.  Your article will not be submitted if it contains any HTML.</Text>
-                <View style={{ marginVertical: 10, flexDirection: 'row', justifyContent: 'center' }}>
+                    * We reserve the right to edit any content for brevity or clarity.
+                    Your article will not be submitted if it contains any HTML.
+                </Text>
+                <View style={
+                    { marginVertical: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'center', }}>
                     <Icon.Button name = "camera"
                                  backgroundColor="#0000ffaf"
                                  onPress={()=> {}}
@@ -76,7 +90,10 @@ export default class Contribute extends Component
                                     flexDirection: 'column',
                                     right: 0, }}/>
                 </View>
-                    <Button title = "Submit" color = {Platform.OS === 'android' ? 0x0000ffaf : 'blue'} onPress = {this.doSubmit}/>
+                    <Button
+                        title = "Submit"
+                        color = {Platform.OS === 'android' ? 0x0000ffaf : 'blue'}
+                        onPress = {this.doSubmit}/>
             </View>
 
                 <View>

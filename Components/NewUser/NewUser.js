@@ -3,8 +3,6 @@ import { Text, TextInput, View, Button, } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, } from 'redux';
 import * as Actions from '../../redux/actions/user';
-import * as Animatable from 'react-native-animatable';
-import TouchableItem from 'react-navigation/lib-rn/views/TouchableItem';
 import styles from'../Login/Styles/Styles.js';
 export default class NewUser extends Component
 {
