@@ -1,3 +1,4 @@
+// jscs:disable
 import React, { Component }from 'react';
 import { Text, TextInput, View, Button, Platform } from 'react-native';
 import styles from '../AppStyles/Styles';

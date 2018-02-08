@@ -58,21 +58,23 @@ export default class NewUser extends Component
 
   shouldComponentUpdate(nextProps, newState)
   {
-   return this.state.status != newState.status || this.state.shouldShowConfirm != newState.shouldShowConfirm;
+    return this.state.status !== newState.status
+        || this.state.shouldShowConfirm
+        !== newState.shouldShowConfirm;
   }
 
   createUser()
   {
     let formData = new FormData();
-    for (key in Object.keys(this.form))
+    for (let key in Object.keys(this.form))
     {
       formData.append(key, this.form[Object.keys(this.form)[key]]);
     }
 
     let formBody = [];
     for (let property in this.form) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(this.form[property]);
+      let encodedKey = encodeURIComponent(property);
+      let encodedValue = encodeURIComponent(this.form[property]);
       formBody.push(encodedKey + '=' + encodedValue);
     }
 
@@ -91,16 +93,15 @@ export default class NewUser extends Component
     fetch('http://www.theglobalwarmingfoundation.org/newuser1.php', options).
     then((msg)=> {
         console.log(msg.status);
-      if (msg.status != 200) {
-        alert('There was a network error.  Please try again.' + global.runCount);
-        this.setState({ status: msg.status })
+        if (msg.status !== 200) {
+          alert('There was a network error.  Please try again.' + global.runCount);
+          this.setState({ status: msg.status });
 
-      }
-      else
-      {
+        } else
+        {
           this.networkSuccess();
-      }
-    });
+        }
+      });
 
   }
 
@@ -131,8 +132,6 @@ export default class NewUser extends Component
   {
 
     return (
-
-
 
 <View style={styles.mainContainer}>
             <View style={styles.entryView}>
@@ -186,7 +185,9 @@ export default class NewUser extends Component
                 <TextInput style={styles.entry}
                            onChangeText = {(text)=>this.changeText(text, 'bio')}/>
             </View>
-            <Button onPress = {()=> {this.createUser();}} title="Create user"></Button>
+            <Button onPress = {()=>
+            {this.createUser();}
+            } title="Create user"/>
             <Text>If you do not provide a password we will generate one for you and email it.</Text>
 
 

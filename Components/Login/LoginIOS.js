@@ -1,3 +1,4 @@
+// jscs:disable maximumLineLength
 // jscs:disable 'super' outside of function or class (10
 import React, { Component } from 'react';
 import { Text, TextInput, View, Button, AsyncStorage, } from 'react-native';

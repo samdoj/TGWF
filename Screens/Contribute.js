@@ -7,7 +7,8 @@ export default class Contribute extends Component
 {
   doSubmit() {
     alert('Your article was submitted successfully');
-    return;
+
+    //return;
   }
 
   constructor(props)

@@ -23,9 +23,8 @@ import NewUser from "./Components/NewUser/NewUser";
 // invoke API directly when in need
 // noinspection JSAnnotator
 
-if (console.dir) {
-    console.dir = console.dir
-} else {
+if (!console.dir) {
+
     console.dir = () => null
 }
 const logger = createLogger({

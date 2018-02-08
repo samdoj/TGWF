@@ -11,11 +11,10 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import Donation from './Screens/Donation';
 import Contribute from './Screens/Contribute';
+
 // noinspection JSAnnotator
 
-if (console.dir) {
-  console.dir = console.dir;
-} else {
+if (!console.dir) {
   console.dir = () => null;
 }
 
@@ -24,7 +23,8 @@ const logger = createLogger({
     predicate: () =>
         process.env.NODE_ENV === `development`, // eslint-disable-line no-unused-vars
   });
-const store = createStore(combineReducers({ userReducer }), applyMiddleware(thunkMiddleware, logger));
+const store = createStore(
+    combineReducers({ userReducer }), applyMiddleware(thunkMiddleware, logger));
 
 export default class tgwf extends Component {
   render() {

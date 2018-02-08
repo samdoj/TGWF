@@ -1,3 +1,4 @@
+// jscs:disable maximumLineLength
 // jscs:disable 'super' outside of function or class (10
 import React, { Component } from 'react';
 import {
@@ -17,8 +18,10 @@ function mapStateToProps(state) {
   console.log('STATE IS ');
   console.dir(state);
   return { userName: userReducer.userName,
-      password: userReducer.password, validUser:
-      userReducer.isValidUser, secondsToWait: userReducer.secondsToWait, interval: userReducer.interval, };
+      password: userReducer.password,// jscs:ignore disallowTrailingWhitespace
+      validUser: userReducer.isValidUser,// jscs:ignore disallowTrailingWhitespace
+      secondsToWait: userReducer.secondsToWait,
+      interval: userReducer.interval, };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -31,7 +34,7 @@ class LoginComponent extends Component {
   inputPassword = '';
 
   sendMail() {
-    return;
+    //return;
   }
 
   changeText(text, type)
@@ -70,7 +73,9 @@ class LoginComponent extends Component {
   render() {
     if (this.props.validUser === TRIES && !this.props.interval)
     {
-      this.props.createLoginTimer(SECONDS, setInterval(()=> this.props.updateLoginTimer(this.props.secondsToWait - 1), 1000));
+      this.props.
+      createLoginTimer(SECONDS, setInterval(()=>
+          this.props.updateLoginTimer(this.props.secondsToWait - 1), 1000));
     }
 
     const { validUser, } = this.props;
@@ -111,7 +116,8 @@ class LoginComponent extends Component {
     }
 
     return (
-        <ImageBackground style = {{ flex: 1, zIndex: 1 }} source={require('../../assets/images/iceberg.jpg')}>
+        <ImageBackground style = {{ flex: 1, zIndex: 1 }}
+                         source={require('../../assets/images/iceberg.jpg')}>
       <Animatable.View style={styles.mainContainer}
         ref = "LoginView"  >
 
@@ -136,8 +142,11 @@ class LoginComponent extends Component {
             />
           </View>
           <Text style = {styles.errorText}>
-              {!(validUser === 'initial' || validUser === 'reset') ? 'Invalid username or password.  Please try again.  You have' +
-                  ` ${TRIES - (typeof this.props.validUser === 'number' ? this.props.validUser : 0)} attempts remaining` : null }
+              {!(validUser === 'initial' || validUser === 'reset') ?
+                  'Invalid username or password.  Please try again.  You have' +
+                  ` ${TRIES -
+                  (typeof this.props.validUser === 'number'
+                      ? this.props.validUser : 0)} attempts remaining` : null }
           </Text>
         </Animatable.View>
         <Animatable.View style = {styles.noMoreTries} ref = "WaitView">
