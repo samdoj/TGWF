@@ -1,24 +1,23 @@
 // jscs:disable maximumLineLength
 // jscs:disable 'super' outside of function or class (10
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, AsyncStorage, } from 'react-native';
+import { Text, TextInput, View, Button, AsyncStorage, TouchableOpacity, Platform} from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, } from 'redux';
 import * as Actions from '../../redux/actions/user';
 import * as Animatable from 'react-native-animatable';
-import TouchableItem from 'react-navigation/lib-rn/views/TouchableItem';
 import styles from'../Login/Styles/Styles.js';
 import Checkbox from 'react-native-checkbox';
 import { setUserValid } from '../../redux/actions/user';
+import Contribute from "../../Screens/Contribute";
+import {isValidUser} from "../../redux/actions/user";
 
 const TRIES = 3;
 const SECONDS = 10;
 const ANIMATION_TIME  = 100;
-
+const COLOR =  Platform.OS === 'ios' ? 'blue' : 0x0000ffaf;
 function mapStateToProps(state) {
   let { userReducer } = state;
-  console.log('STATE IS ');
-  console.dir(state);
   return { userName: userReducer.userName,
       password: userReducer.password,
       validUser: userReducer.isValidUser,
@@ -113,6 +112,8 @@ class LoginComponent extends Component {
   }
 
   render() {
+     if(global.token)
+         this.props.isValidUser('', '', global.token);
     const { validUser, } = this.props;
     if (this.refs.LoginView)
     {
@@ -121,7 +122,6 @@ class LoginComponent extends Component {
         (SECONDS, setInterval(() => this.props.updateLoginTimer(this.props.secondsToWait - 1), 1000));
       }
 
-      console.log('Valid user: ' + validUser);
       if (validUser === 'reset') {
         this.refs.LoginView.setNativeProps({ style: { zIndex: 1 }, duration: ANIMATION_TIME });
         this.refs.LoginView.fadeIn();
@@ -129,15 +129,9 @@ class LoginComponent extends Component {
         this.refs.WaitView.fadeOut();
       }
 
-      console.log("I'm running!");
-      console.dir(this.props);
-      console.dir(this.state);
       if (validUser === true) {
         return (
-            <View style={{ flex: 1, backgroundColor: 0x5bf1e903 }}>
-
-                  <Text style={{ fontSize: 50, alignSelf: 'center' }}>Hello world!</Text>
-              </View>
+            <Contribute/>
         );
       }
     }
@@ -173,7 +167,7 @@ class LoginComponent extends Component {
             />
             <Button onPress = {()=> {this.tryUserLogin();}}
 
-                    title="Login" style = {{ color: 'black' }}/>
+                    title="Login" color= {COLOR}/>
           <Text style = {styles.errorText}>
               {!(validUser === 'initial' || validUser === 'reset' || validUser) ?
                   'Invalid username or password.  Please try again.  You have' +
@@ -182,20 +176,17 @@ class LoginComponent extends Component {
           </Text>
         </Animatable.View>
         <Animatable.View style = {styles.noMoreTries} ref = "WaitView">
-            <Text style = { styles.errorText }>
-                You have made too many incorrect login attempts.  You must wait {this.props.secondsToWait}
-                <Text style = { styles.errorText }>
-                    {` second${this.props.secondsToWait > 1 ? 's' : ''}` } before trying again or {' '}
-                    </Text>
-                {/*TODO: show an emailer screen.*/}
-                <TouchableItem style={ styles.linkContainer} onPress={()=>alert('You forgot!')}>
-                <Text style = {styles.linkText}>
-                     Click Here
-                </Text>
-
-            </TouchableItem>
-                {'if you have forgotten your password'}
+            <Text style={ styles.errorText } >
+                You have entered an incorrect username and password combination too many times. You must wait{' ' + this.props.secondsToWait + ' seconds '}
+                or reset your password.
             </Text>
+            <View style={{ padding: 20 }}>
+                <Button onPress = {()=> {this.sendMail();}
+                }
+                        title="Reset Password"
+                        color={0x0000ffaf}
+                />
+            </View>
 
 
         </Animatable.View>

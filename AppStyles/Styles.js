@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Platform } from 'react-native';
+const OS = Platform.OS;
 export default StyleSheet.create(
     {
         errorText:
@@ -27,11 +27,14 @@ export default StyleSheet.create(
                 backgroundColor: 'transparent',
               },
         entry:
-            { flex: 2,
+            {
+                flex: 2,
                 alignSelf: 'stretch',
-                minHeight: 30,
+                minHeight: OS === 'android' ? 40 : 30,
                 backgroundColor: 'white',
-              },
+                paddingBottom: OS === 'android' ? 17 : 0,
+                paddingTop: OS === 'android' ? -10 : 0,
+            },
         noMoreTries:
             { paddingHorizontal: 20,
                 opacity: 0,

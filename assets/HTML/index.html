@@ -1,0 +1,30 @@
+<html>
+<head>
+
+    <script type="text/javascript" src="WebViewBridge.js"></script>
+    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <script type="text/javascript"  >
+    //<![CDATA[
+    bkLib.onDomLoaded(function() {
+         new nicEditor({maxHeight : 110}).panelInstance('editor');
+    });
+    //]]>
+</script>
+    <script>
+        window.document.addEventListener('message',function(e)
+        {
+        window.webViewBridge.send("",{data:nicEditors.findEditor('editor').getContent()},"Success!","Error!");
+        })
+
+    </script>
+
+    <textarea style="height: 85%; width: 100%" cols="50" id="editor">
+    </textarea>
+</body>
+
+</html>
