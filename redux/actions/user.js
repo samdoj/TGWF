@@ -33,7 +33,6 @@ export function isValidUser(userName, password, token) {
       response.json().then((json) => {
         dispatch(setUserValid(!json.code));
         if (json.token) {
-          alert(json.token)
             console.log("TOKEN:" + json.token)
           dispatch(captureToken(json.token));
         }

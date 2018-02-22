@@ -100,7 +100,7 @@ class LoginComponent extends Component {
           const val = response.map((keyValues) => {  //We can discard the keys
 
                   if (err)
-                      alert(`Error: ${err}`);
+                      console.log(`Error: ${err}`);
                   return keyValues[1];
                 }
            );
@@ -109,7 +109,6 @@ class LoginComponent extends Component {
 
           if ((val.every((element)=> {return !!element;}) || !!token))
           {
-            alert('Logging in');
             this.props.isValidUser(val[0], val[1], token);
           }
         }

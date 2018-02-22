@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import { View, Button, Text, TextInput, ScrollView, Platform, WebView } from 'react-native';
+import { View, Button, Text, TextInput, ScrollView, Platform, } from 'react-native';
 import styles from '../AppStyles/Styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import NicEditor from '../Components/NicEditor/nicEditor';
 
 export default class Contribute extends Component {
-  onMessage(event) {
-    console.dir(event);
-    alert(event.nativeEvent.data);
-  }
 
-  bridge(data) {
-    alert(data);
-  }
-
-  doSubmit() {
-    this.myWebView.postMessage('Hi!');
+    doSubmit() {
+    this.myEditor.postMessage('Hi!');
     alert('Your article was submitted successfully');
 
     // return;
@@ -26,10 +19,6 @@ export default class Contribute extends Component {
   }
 
   render() {
-    const injectedScript = () => {
-        window.postMessage(document.body.innerHTML);
-        window.postMessage = window.originalPostMessage || window.postMessage;
-      };
 
     if (global.inMemory === undefined) {
       global.inMemory = true;
@@ -66,23 +55,11 @@ export default class Contribute extends Component {
       marginVertical: 10,
     }}
               >
-                <WebView
-                  style={
-                                        {
-      flex: 1,
-      minHeight: 200,
-      maxHeight: 250,
-      minWidth: 100,
-      marginVertical: 10,
-    }}
-                  source={{ uri: 'http://www.theglobalwarmingfoundation.org/rninterface.html' }}
-                  injectedJavaScript={`(${String(injectedScript)})()`}
-                  javascriptEnabled={true}
-                  ref={(webview) => { this.myWebView = webview; }}
+           <NicEditor ref = {(myEditor)=>this.myEditor = myEditor}
+                      source = {{uri: "http://www.tgwf.org/rninterface.html"}}>
 
-                  onMessage={this.onMessage.bind(this)}
-                />
-              </ScrollView>
+           </NicEditor>
+                         </ScrollView>
 
             </View>
             <Text style={{
