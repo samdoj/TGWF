@@ -1,7 +1,7 @@
 // jscs:disable maximumLineLength
 // jscs:disable 'super' outside of function or class (10
 import React, { Component } from 'react';
-import { Text, TextInput, View, Button, AsyncStorage, TouchableOpacity, Platform} from 'react-native';
+import { Text, TextInput, View, Button, AsyncStorage, TouchableOpacity, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, } from 'redux';
 import * as Actions from '../../redux/actions/user';
@@ -9,13 +9,14 @@ import * as Animatable from 'react-native-animatable';
 import styles from'../Login/Styles/Styles.js';
 import Checkbox from 'react-native-checkbox';
 import { setUserValid } from '../../redux/actions/user';
-import Contribute from "../../Screens/Contribute";
-import {isValidUser} from "../../redux/actions/user";
+import Contribute from '../../Screens/Contribute';
+import { isValidUser } from '../../redux/actions/user';
 
 const TRIES = 3;
 const SECONDS = 10;
 const ANIMATION_TIME  = 100;
 const COLOR =  Platform.OS === 'ios' ? 'blue' : 0x0000ffaf;
+let checkBoxState = false;
 function mapStateToProps(state) {
   let { userReducer } = state;
   return { userName: userReducer.userName,
@@ -24,7 +25,8 @@ function mapStateToProps(state) {
       secondsToWait: userReducer.secondsToWait,
       interval: userReducer.interval,
       loginAttempts: userReducer.loginAttempts,
-      errorMessage: userReducer.errorMessage, };
+      errorMessage: userReducer.errorMessage,
+      token: userReducer.token, };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -53,10 +55,9 @@ class LoginComponent extends Component {
     }
   }
 
-  checkRememberMe(checked)
+  checkRememberMe(isChecked)
   {
-    this.props.checked = checked;
-    console.log(`The box is${!checked  ? 'unchecked' : 'checked'}`);
+    checkBoxState = isChecked;
   }
 
   tryUserLogin()
@@ -93,8 +94,34 @@ class LoginComponent extends Component {
     this.props.checked = true;
   }
 
+  componentDidMount()
+  {
+    AsyncStorage.multiGet(['userName', 'password'], (err, response)=> {
+          const val = response.map((keyValues) => {  //We can discard the keys
+
+                  if (err)
+                      alert(`Error: ${err}`);
+                  return keyValues[1];
+                }
+           );
+          console.log('VALUES: ' + val);
+          const token = val.every((element) => {return !!element;}) ? global.token : val[2];
+
+          if ((val.every((element)=> {return !!element;}) || !!token))
+          {
+            alert('Logging in');
+            this.props.isValidUser(val[0], val[1], token);
+          }
+        }
+
+  );
+
+  }
+
   componentDidUpdate()
   {
+    if (global.inMemory)
+        console.log('Component remounted');
     const { validUser, } = this.props;
 
     if (!(validUser && this.props.loginAttempts < TRIES) && !this.props.interval) {
@@ -112,8 +139,10 @@ class LoginComponent extends Component {
   }
 
   render() {
-     if(global.token)
-         this.props.isValidUser('', '', global.token);
+    if (!!global.inMemory)
+        return (
+            <Contribute/>
+        );
     const { validUser, } = this.props;
     if (this.refs.LoginView)
     {
@@ -129,7 +158,16 @@ class LoginComponent extends Component {
         this.refs.WaitView.fadeOut();
       }
 
-      if (validUser === true) {
+      if (validUser === true && validUser !== 'initial') {
+        if (checkBoxState)
+        {
+          AsyncStorage.multiSet(
+              [
+                  ['userName', this.props.userName],
+                  ['password', this.props.password],
+              ]).catch((err)=>alert('Error storing: ' + err));
+        }
+
         return (
             <Contribute/>
         );

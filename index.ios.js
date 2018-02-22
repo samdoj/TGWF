@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import Login from './Components/Login/LoginIOS';
+import Login from './Components/Login/Login';
 import userReducer from './redux/reducers/user';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';

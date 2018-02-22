@@ -124,7 +124,7 @@ class MakeNewUser extends Component {
           case 401:
             {
               alert('You already seem to have a user account.' +
-                ' Email jtmason@tgwf.org for a password reset if you have forgotten your password');
+                ' Email jtmason@tgwfoundation.org for a password reset if you have forgotten your password');
             }
 
             break;

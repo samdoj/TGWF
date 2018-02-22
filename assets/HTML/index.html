@@ -10,20 +10,33 @@
 
     <script type="text/javascript"  >
     //<![CDATA[
+    var editor;
+    function reLoadEditor() {
+        editor.removeInstance('editor');
+        editor = new nicEditor({buttonList: ["fontFormat", "fontSize","bold", "italic", "link", "unlink", "left", "center", "right"]}).panelInstance('editor');
+
+
+    };
+
+    $(window).resize( function() {
+        reLoadEditor();
+    } );
     bkLib.onDomLoaded(function() {
-         new nicEditor({maxHeight : 110}).panelInstance('editor');
+        editor = new nicEditor({buttonList: ["fontFormat", "fontSize","bold", "italic", "link", "unlink", "left", "center", "right"]}).panelInstance('editor');
+
     });
     //]]>
 </script>
     <script>
         window.document.addEventListener('message',function(e)
         {
-        window.webViewBridge.send("",{data:nicEditors.findEditor('editor').getContent()},"Success!","Error!");
+       // window.webViewBridge.send("",{data:nicEditors.findEditor('editor').getContent()},"Success!","Error!");
+            window.postMessage(nicEditors.findEditor('editor').getContent())
         })
 
     </script>
 
-    <textarea style="height: 85%; width: 100%" cols="50" id="editor">
+    <textarea style="height: 70%; width: 100%" cols="50" id="editor">
     </textarea>
 </body>
 

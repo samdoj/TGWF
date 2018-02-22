@@ -31,10 +31,10 @@ export function isValidUser(userName, password, token) {
     options.method = 'POST';
     fetch(token === undefined ? URL : VALIDATE_URL, options).then((response) => {
       response.json().then((json) => {
-        // console.log(json);
-        console.log(json.token);
-        dispatch(setUserValid(json.token !== undefined || json.code !== undefined));
+        dispatch(setUserValid(!json.code));
         if (json.token) {
+          alert(json.token)
+            console.log("TOKEN:" + json.token)
           dispatch(captureToken(json.token));
         }
       });
