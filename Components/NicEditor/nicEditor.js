@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView } from 'react-native';
+import { WebView, Platform } from 'react-native';
 
 export default class  NicEditor extends Component {
 
@@ -9,9 +9,10 @@ export default class  NicEditor extends Component {
   }
 
   onMessage(event) {
-    console.dir(event);
+    //console.log(`WV_DATA: ${JSON.stringify(event)}`);
+      console.log(event.nativeEvent.data);
     //alert(event.nativeEvent.data);
-    this.setState({ message: event.data });
+    this.setState({ message: event.nativeEvent.data });
   }
 
   constructor(props)
@@ -21,12 +22,18 @@ export default class  NicEditor extends Component {
   }
 
   render() {
-    const injectedScript = () => {
+    let injectedScript = () => {
         window.postMessage(document.body.innerHTML);
         window.postMessage = window.originalPostMessage || window.postMessage;
       };
 
-    return(
+    injectedScript = `(${String(injectedScript)})()`;
+    if (Platform.OS === 'android')
+    {
+      injectedScript = "OS = 'android'";
+    }
+
+    return (
     <WebView
     style={
         {
@@ -37,7 +44,7 @@ export default class  NicEditor extends Component {
             marginVertical: 10,
           }}
     source={this.props.source}
-    injectedJavaScript={`(${String(injectedScript)})()`}
+    injectedJavaScript={injectedScript}
     ignoreSslError={true}
     javascriptEnabled={true}
     ref={(webview) => {

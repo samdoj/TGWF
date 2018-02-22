@@ -1,16 +1,12 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, View, Text, ImageBackground } from 'react-native';
+import { ImageBackground } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import Login from './Components/Login/Login';
 import userReducer from './redux/reducers/user';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import Donation from './Screens/Donation';
-import Contribute from './Screens/Contribute';
-import NewUser from './Components/NewUser/NewUser';
-import {setCustomSourceTransformer} from "react-native/Libraries/Image/resolveAssetSource";
 
 // noinspection JSAnnotator
 
