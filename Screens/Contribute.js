@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, Button, Text, TextInput, ScrollView, Platform, } from 'react-native';
+import { View, Button, Text, TextInput, ScrollView, Platform, AppState } from 'react-native';
 import styles from '../AppStyles/Styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NicEditor from '../Components/NicEditor/nicEditor';
 
 export default class Contribute extends Component {
 
-    doSubmit() {
+  doSubmit() {
     this.myEditor.postMessage('Hi!');
     alert('Your article was submitted successfully');
 
@@ -18,13 +18,15 @@ export default class Contribute extends Component {
     this.doSubmit = this.doSubmit.bind(this);
   }
 
+
+
   render() {
 
     if (global.inMemory === undefined) {
       global.inMemory = true;
       alert('* Disclaimer:  We neither request nor encourage you to endanger your life, ' +
           'body or property to contribute to us.  Always ensure your safety above all else, and comply' +
-          ' with any and all instructions from law enforcement or other emergency personel.\n');
+          ' with any and all instructions from law enforcement or other emergency personnel.\n');
     }
 
     global.inMemory = true;
@@ -56,7 +58,7 @@ export default class Contribute extends Component {
     }}
               >
            <NicEditor ref = {(myEditor)=>this.myEditor = myEditor}
-                      source = {{uri: "http://www.tgwf.org/rninterface.html"}}>
+                      source = {{ uri: 'http://www.tgwf.org/rninterface.html' }}>
 
            </NicEditor>
                          </ScrollView>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, Platform } from 'react-native';
+import { WebView, Platform, AppState } from 'react-native';
 
 export default class  NicEditor extends Component {
 
@@ -9,10 +9,30 @@ export default class  NicEditor extends Component {
   }
 
   onMessage(event) {
-    //console.log(`WV_DATA: ${JSON.stringify(event)}`);
-    console.log(event.nativeEvent.data);
-    //alert(event.nativeEvent.data);
-    this.setState({ message: event.nativeEvent.data });
+    const { data } = event.nativeEvent;
+    console.log(data);
+    global.editorText = data;
+    this.setState({ message: data });
+  }
+
+  componentDidMount()
+  {
+    AppState.addEventListener('change', (nextAppState)=>
+    {
+        console.log(nextAppState);
+        if (nextAppState === 'active') {
+          console.log(global.editorText);
+        } else {
+          this.postMessage('dump');
+          console.log(global.editorText);
+        }
+      });
+  }
+
+  restoreText()
+  {
+    if (global.editorText)
+        this.myWebView.injectJavaScript(`nicEditors.findEditor( "editor" ).setContent('${global.editorText}');`);
   }
 
   constructor(props)
@@ -27,10 +47,10 @@ export default class  NicEditor extends Component {
         window.postMessage = window.originalPostMessage || window.postMessage;
       };
 
-    injectedScript = `(${String(injectedScript)})()`;
+    injectedScript = `(${String(injectedScript)})();`;
     if (Platform.OS === 'ios')
     {
-      injectedScript = "OS = 'ios'";
+      injectedScript = "OS = 'ios;'";
     }
 
     return (
@@ -50,6 +70,8 @@ export default class  NicEditor extends Component {
     ref={(webview) => {
         this.myWebView = webview;
       }}
+
+    onLoadEnd={this.restoreText.bind(this)}
 
     onMessage={this.onMessage.bind(this)}
     />);
