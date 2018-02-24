@@ -10,7 +10,7 @@ export default class  NicEditor extends Component {
 
   onMessage(event) {
     //console.log(`WV_DATA: ${JSON.stringify(event)}`);
-      console.log(event.nativeEvent.data);
+    console.log(event.nativeEvent.data);
     //alert(event.nativeEvent.data);
     this.setState({ message: event.nativeEvent.data });
   }
@@ -28,9 +28,9 @@ export default class  NicEditor extends Component {
       };
 
     injectedScript = `(${String(injectedScript)})()`;
-    if (Platform.OS === 'android')
+    if (Platform.OS === 'ios')
     {
-      injectedScript = "OS = 'android'";
+      injectedScript = "OS = 'ios'";
     }
 
     return (
