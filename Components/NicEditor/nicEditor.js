@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { WebView, Platform, AppState } from 'react-native';
+import styles from "./Styles/Styles.js";
 
 export default class  NicEditor extends Component {
 
@@ -23,8 +24,15 @@ export default class  NicEditor extends Component {
         if (nextAppState === 'active') {
           console.log(global.editorText);
         } else {
-          this.postMessage('dump');
-          console.log(global.editorText);
+          try
+          {
+            this.postMessage('dump');
+            console.log(global.editorText);
+          }
+          catch (err)
+          {
+            console.log(err);
+          }
         }
       });
   }
@@ -55,14 +63,7 @@ export default class  NicEditor extends Component {
 
     return (
     <WebView
-    style={
-        {
-            flex: 1,
-            minHeight: 200,
-            maxHeight: 250,
-            minWidth: 100,
-            marginVertical: 10,
-          }}
+    style={styles.webViewStyle}
     source={this.props.source}
     injectedJavaScript={injectedScript}
     ignoreSslError={true}
