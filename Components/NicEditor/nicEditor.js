@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { WebView, Platform, AppState } from 'react-native';
-import styles from "./Styles/Styles.js";
+import styles from './Styles/Styles.js';
 
 export default class  NicEditor extends Component {
 
@@ -11,12 +11,12 @@ export default class  NicEditor extends Component {
 
   onMessage(event) {
     const { data } = event.nativeEvent;
+    console.dir(data);
     console.log(data);
     global.editorText = data;
     this.setState({ message: data });
   }
-
-  componentDidMount()
+    componentDidMount()
   {
     AppState.addEventListener('change', (nextAppState)=>
     {

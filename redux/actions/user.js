@@ -30,12 +30,15 @@ export function isValidUser(userName, password, token) {
     };
     options.method = 'POST';
     fetch(token === undefined ? URL : VALIDATE_URL, options).then((response) => {
-      response.json().then((json) => {
+      response.json().then(async (json) => {
+          if (json.token) {
+              token = json.token
+              console.log("email:" + json.user_email);
+              await dispatch(captureToken(json.token));
+              await dispatch(setEmail(json.user_email))
+          }
         dispatch(setUserValid(!json.code));
-        if (json.token) {
-            console.log("TOKEN:" + json.token)
-          dispatch(captureToken(json.token));
-        }
+
       });
     }).catch((err) => {
       console.log(err);
@@ -51,6 +54,12 @@ export function setUserValid(bool) {
   };
 }
 
+export function setEmail(email) {
+    return {
+        type: 'EMAIL',
+        email,
+    }
+}
 export function captureToken(token) {
   global.token = token;
   return {

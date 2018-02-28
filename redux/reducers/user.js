@@ -6,7 +6,8 @@ const initialState =
         secondsToWait: 0,
         interval: null,
         token: null,
-        errorMessage: ""};
+        errorMessage: '',
+        email: ''};
 
 const userReducer = function (state = initialState, action = {}) {
 
@@ -34,7 +35,11 @@ const userReducer = function (state = initialState, action = {}) {
           return Object.assign({}, state, { password: action.password });
 
         }
+        case 'EMAIL':
+        {
+            return Object.assign({}, state, { email: action.email });
 
+        }
         break;
 
       case 'USER_VALID':
@@ -69,7 +74,7 @@ const userReducer = function (state = initialState, action = {}) {
         }
         break;
         case 'USER_TOKEN':
-        {
+        {   console.log(action.token)
             return Object.assign({},state, {token: action.token})
         }
         break;

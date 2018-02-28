@@ -26,7 +26,8 @@ function mapStateToProps(state) {
       interval: userReducer.interval,
       loginAttempts: userReducer.loginAttempts,
       errorMessage: userReducer.errorMessage,
-      token: userReducer.token, };
+      token: userReducer.token,
+      email: userReducer.email, };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -96,20 +97,24 @@ class LoginComponent extends Component {
 
   componentDidMount()
   {
+    for (let i = 1; i < 1000; i++)
+    {
+      let x = i * i;
+    } //Hack to add a bit of a delay.  Should be fixed with setTimeOut but this works.
+
     AsyncStorage.multiGet(['userName', 'password'], (err, response)=> {
           const val = response.map((keyValues) => {  //We can discard the keys
 
                   if (err)
-                      console.log(`Error: ${err}`);
+                      alert(`Error: ${err}`);
                   return keyValues[1];
                 }
            );
           console.log('VALUES: ' + val);
-          const token = val.every((element) => {return !!element;}) ? global.token : val[2];
 
-          if ((val.every((element)=> {return !!element;}) || !!token))
+          if ((val.every((element)=> {return !!element;})))
           {
-            this.props.isValidUser(val[0], val[1], token);
+            this.props.isValidUser(val[0], val[1]);
           }
         }
 
@@ -119,8 +124,6 @@ class LoginComponent extends Component {
 
   componentDidUpdate()
   {
-    if (global.inMemory)
-        console.log('Component remounted');
     const { validUser, } = this.props;
 
     if (!(validUser && this.props.loginAttempts < TRIES) && !this.props.interval) {
@@ -140,7 +143,7 @@ class LoginComponent extends Component {
   render() {
     if (!!global.inMemory)
         return (
-            <Contribute/>
+            <Contribute email={this.props.email}/>
         );
     const { validUser, } = this.props;
     if (this.refs.LoginView)
@@ -168,7 +171,7 @@ class LoginComponent extends Component {
         }
 
         return (
-            <Contribute/>
+            <Contribute email={this.props.email}/>
         );
       }
     }
