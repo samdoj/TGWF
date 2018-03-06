@@ -12,6 +12,7 @@ export default StyleSheet.create(
             { flex: 1,
                 fontSize: 20,
                 backgroundColor: 'transparent',
+                color: 'black',
               },
         mainContainer:
             { flex: 3,

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { WebView } from 'react-native';
+import  { WebView, Platform }  from 'react-native';
+import AndroidView from 'react-native-custom-android-webview';
+
+const WebViewComponent = Platform.OS === 'android' ? AndroidView : WebView;
 
 class WebsiteView extends Component
 {
@@ -9,7 +12,7 @@ class WebsiteView extends Component
     this.state =
         { uri: props.lostPassword ?
             'http://www.theglobalwarmingfoundation.org/wp-login.php?action=lostpassword'
-            : 'http://www.tgwf.org', };
+            : 'http://www.theglobalwarmingfoundation.org', };
 
   }
 
@@ -17,11 +20,16 @@ class WebsiteView extends Component
   {
 
     return (
-<WebView
-ref = "WebView"
-source = {{ uri: this.state.uri } }
+        <WebViewComponent
 
-/>);
+ref = "WebView"
+source = {{ uri: this.state.uri }}
+  scalesPageToFit = {Platform.OS === 'ios' || true}
+javascriptEnabled = {true}
+initialScale="10%"
+style={{ width: '100%', height: '100%' }}
+/>
+    );
   }
 
 }

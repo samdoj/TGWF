@@ -7,6 +7,8 @@ import Login from './Components/Login/Login';
 import userReducer from './redux/reducers/user';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import Donation from './Screens/Donation';
+import Navigator from './Components/Navigator/Navigator';
 
 // noinspection JSAnnotator
 
@@ -29,7 +31,7 @@ export default class tgwf extends Component {
           style={{ flex: 1, zIndex: 1 }}
           source={require('./assets/images/iceberg.jpg')}
         >
-          <Login />
+          <Navigator />
         </ImageBackground>
       </Provider>);
   }

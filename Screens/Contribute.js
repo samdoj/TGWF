@@ -8,6 +8,8 @@ const DOMAIN = 'http://www.theglobalwarmingfoundation.org/make_post.php';
 let interval;
 let title = '';
 let image = null;
+let inMainView = false;
+let inEditorView = false;
 
 export default class Contribute extends Component {
 
@@ -93,9 +95,21 @@ export default class Contribute extends Component {
     console.log('Contribute component ostensibly loaded');
     return (
 
-      <View style={styles.mainContainer}>
-        <ScrollView style={{ flex: 1 }}>
-          <View style={{ height: 20 }} />
+      <View style={styles.mainContainer}
+            onStartShouldSetResponder = {(e) => {
+                inMainView = true;
+                this.ScrollViewRef.setNativeProps({scrollEnabled: !inEditorView});
+                inEditorView = false;
+
+
+            }}
+      >
+
+        <ScrollView style={{ flex: 1 }}
+        ref = {(ref) => this.ScrollViewRef = ref}>
+          <View style={{ height: 20 }}
+
+          />
           <View style={styles.entryView}>
             <Text style={styles.entryText}>
                             Title:
@@ -117,10 +131,17 @@ export default class Contribute extends Component {
       marginVertical: 10,
     }}
               >
-           <NicEditor ref = {(myEditor)=>this.myEditor = myEditor}
-                      source = {{ uri: 'http://www.tgwf.org/rninterface.html' }}>
+                  <View style={{flex:1, zIndex:3 }}
+                  onStartShouldSetResponder = {(e) => {
+                      inEditorView = true;
+                   }}>
+           <NicEditor ref = {(myEditor)=>this.myEditor = myEditor
+                        }
+                      hostView = {this}
+                      source = {{ uri: 'http://www.theglobalwarmingfoundation.org/rninterface.html' }}>
 
            </NicEditor>
+                  </View>
                          </ScrollView>
 
             </View>
@@ -149,22 +170,13 @@ export default class Contribute extends Component {
               </View>
             <Text style={{
       fontSize: 18,
+      marginTop: '15%',
       marginBottom: 5,
       color: 'black',
     }}
             >
                             * We reserve the right to edit any content for brevity or clarity.
             </Text>
-            <View style={
-                            {
-      marginVertical: 10,
-      flexDirection: 'row',
-      justifyContent: 'center',
-    }}
-            >
-
-
-            </View>
             <Button
                 style={{ flex: 1 }}
               title="Submit"

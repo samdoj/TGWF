@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { WebView, Platform, AppState } from 'react-native';
+import { WebView, Platform, AppState, View } from 'react-native';
 import styles from './Styles/Styles.js';
 
 export default class  NicEditor extends Component {
@@ -16,8 +16,9 @@ export default class  NicEditor extends Component {
     global.editorText = data;
     this.setState({ message: data });
   }
-    componentDidMount()
-  {
+
+  componentDidMount()
+{
     AppState.addEventListener('change', (nextAppState)=>
     {
         console.log(nextAppState);
@@ -62,9 +63,19 @@ export default class  NicEditor extends Component {
     }
 
     return (
+        <View
+            onStartShouldSetResponder = {(evt) => console.dir(this.props)}
+
+            onResponderReject = {(evt) => alert('rejected')}
+            onResponderShouldCapture = {(evt) => alert(true)}
+
+             >
     <WebView
-    style={styles.webViewStyle}
+        onStartShouldSetResponder = {(evt) => alert(true)}
+        onResponderReject = {(evt) => alert('rejected')}
+        style={styles.webViewStyle}
     source={this.props.source}
+    scalesPageToFit = {true}
     injectedJavaScript={injectedScript}
     ignoreSslError={true}
     javascriptEnabled={true}
@@ -75,6 +86,8 @@ export default class  NicEditor extends Component {
     onLoadEnd={this.restoreText.bind(this)}
 
     onMessage={this.onMessage.bind(this)}
-    />);
+    />
+        </View>
+    );
   }
 }

@@ -20,9 +20,11 @@ const TextFields =
              {
           return (
 
-                 Platform.OS ==='ios' ? <Button title="Donate" key = "Button" color="blue" onPress={()=> {}} style={{ alignSelf: 'flex-start' }}/> :
+              <View style={{marginVertical:"10%"}} key = "Button">{
+              Platform.OS ==='ios' ? <Button title="Donate"  color="blue" onPress={()=> {}} style={{ alignSelf: 'flex-start' }}/> :
 
-                         <Button title="Donate" key="Button" color={0x0000ffaf} onPress={()=>{}} style={{alignSelf:'flex-start'}}/> : null
+                         <Button title="Donate" key="Button" color={0x0000ffaf} onPress={()=>{}} style={{ alignSelf:'flex-start'}}/> }
+              </View>
 
 
 
@@ -49,6 +51,9 @@ class Donation extends Component
 
 
 <View style = {styles.mainContainer}>
+    <Text style={{marginVertical:'10%', color: 'black'}}>
+        *None of this information is collected or required.  However, if you are a US citizen, we can use it to issue you a tax receipt.
+    </Text>
             {TextFields}
         </View>
 
