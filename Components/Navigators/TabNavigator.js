@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import { TabNavigator } from 'react-navigation';
-import Contribute from '../../Screens/Contribute';
-import Login from '../Login/Login';
 import WebsiteView from '../../Screens/WebsiteView';
-import {View} from 'react-native';
+import ContributeStack from "./ContributeStack";
 
 
 
-export default class Navigator extends Component<Props>
+export default class RootNavigator extends Component<Props>
 {
 
     render()
     {
         const Tabs = TabNavigator({
-            Contribute: {screen: Login},
+            Contribute: {screen: ContributeStack},
             Website: {screen: WebsiteView}
         });
         const tabNav = <Tabs style={{flex:1}}/>

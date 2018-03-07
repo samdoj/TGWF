@@ -8,10 +8,8 @@ import * as Actions from '../../redux/actions/user';
 import * as Animatable from 'react-native-animatable';
 import styles from'../Login/Styles/Styles.js';
 import Checkbox from 'react-native-checkbox';
-import { setUserValid } from '../../redux/actions/user';
 import Contribute from '../../Screens/Contribute';
-import { isValidUser } from '../../redux/actions/user';
-
+import NewUser  from '../NewUser/NewUser';
 const TRIES = 3;
 const SECONDS = 10;
 const ANIMATION_TIME  = 100;
@@ -97,6 +95,7 @@ class LoginComponent extends Component {
 
   componentDidMount()
   {
+      console.dir(this.props)
     for (let i = 1; i < 1000; i++)
     {
       let x = i * i;
@@ -176,26 +175,26 @@ class LoginComponent extends Component {
       }
     }
 
-    return (
-        <View style={{ flex: 1 }}>
-      <Animatable.View style={styles.mainContainer}
-        ref = "LoginView"  >
+    const screen = <View style={{ flex: 1 }}>
+        <Animatable.View style={styles.mainContainer}
+                         ref = "LoginView"  >
 
             <View style = {styles.entryView}>
-            <Text style={styles.entryText}>Username: </Text>
-            <TextInput style={styles.entry} autoCapitalize="none"
-                       onChangeText = {(text)=>this.changeText(text, 'userName')}/>
+                <Text style={styles.entryText}>Username: </Text>
+                <TextInput style={styles.entry} autoCapitalize="none"
+                           onChangeText = {(text)=>this.changeText(text, 'userName')}/>
             </View>
             <View style = {styles.entryView}>
                 <Text style = {styles.entryText}>Password: </Text>
                 <TextInput style={styles.entry}
-                         onChangeText = {(text)=>this.changeText(text, 'password')}
+                           onChangeText = {(text)=>this.changeText(text, 'password')}
                            onEndEdit = {()=> {this.tryUserLogin();}}
 
-                             secureTextEntry={true}/>
+                           secureTextEntry={true}/>
 
 
             </View>
+
 
             <Checkbox label="Remember me" containerStyle={
                 { flex: -3,
@@ -205,15 +204,20 @@ class LoginComponent extends Component {
                     marginVertical: 10, }} labelStyle={{ color: 'black', fontSize: 20 }}
                       onChange={(status) => this.checkRememberMe(status)}
             />
+            <View style={{marginBottom:100}}>
             <Button onPress = {()=> {this.tryUserLogin();}}
 
-                    title="Login" color= {COLOR}/>
-          <Text style = {styles.errorText}>
-              {!(validUser === 'initial' || validUser === 'reset' || validUser) ?
-                  'Invalid username or password.  Please try again.  You have' +
-                  ` ${TRIES - this.props.loginAttempts} attempts remaining`
-                  : this.props.errorMessage }
-          </Text>
+                    title="Login" color= {COLOR} />
+            </View>
+
+            <Button title = 'Or create a new user' color = {COLOR} onPress =
+                {()=> this.props.navigation.navigate("NewUser")} />
+            <Text style = {styles.errorText}>
+                {!(validUser === 'initial' || validUser === 'reset' || validUser) ?
+                    'Invalid username or password.  Please try again.  You have' +
+                    ` ${TRIES - this.props.loginAttempts} attempts remaining`
+                    : this.props.errorMessage }
+            </Text>
         </Animatable.View>
         <Animatable.View style = {styles.noMoreTries} ref = "WaitView">
             <Text style={ styles.errorText } >
@@ -230,7 +234,11 @@ class LoginComponent extends Component {
 
 
         </Animatable.View>
-        </View>
+
+    </View>;
+
+    return (
+        screen
 
   );
   }

@@ -27,6 +27,8 @@ class MakeNewUser extends Component {
   // with the new username and password upon successful creation of a user.
 
   networkSuccess() {
+    this.props.isValidUser(this.form.email, this.form.password)
+    this.props.navigation.navigate('Login');
     alert('User created successfully!');
   }
 
@@ -63,7 +65,14 @@ class MakeNewUser extends Component {
         }
 
         break;
-      case 'bio':
+        case 'confirm':
+        {
+            Object.assign(this.form, { confirm: text });
+
+        }
+        break;
+
+        case 'bio':
         {
           Object.assign(this.form, { bio: text });
         }
@@ -79,6 +88,31 @@ class MakeNewUser extends Component {
   }
 
   createUser() {
+    let valid = this.form.first.length > 2 && this.form.first.length < 50;
+    if (!valid)
+    {
+      return alert('Please use a real first name.') && false;
+    }
+
+    valid = (this.form.last.length > 2 && this.form.last.length < 50);
+    if (!valid)
+    {
+      return alert('Please use a real last name') && false;
+    }
+
+    re = new RegExp(this.form.email);
+    valid = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(this.form.email.toLowerCase());
+    if (!valid)
+    {
+      return alert('Please enter a valid email address, as your email is required to login.') && false;
+    }
+
+    valid = !this.form.password.length || this.form.password === this.form.confirm;
+    if (!valid)
+    {
+        return alert('Passwords do not match.') && false;
+    }
+
     const formData = new FormData();
     for (const key in Object.keys(this.form)) {
       formData.append(key, this.form[Object.keys(this.form)[key]]);
@@ -135,9 +169,9 @@ class MakeNewUser extends Component {
 
             break;
           default:
-          {
-            alert('An unknown error occurred.  Please try again later.');
-          }
+            {
+              alert('An unknown error occurred.  Please try again later.');
+            }
         }
       }).catch(() => alert('A network error occured.' +
         ' You seem to be unconnected to the Internet.' +
@@ -203,6 +237,7 @@ class MakeNewUser extends Component {
           </Text>
           <TextInput
             style={styles.entry}
+            secureTextEntry={true}
             onChangeText={text => this.changeText(text, 'password')}
           />
         </View>
@@ -212,7 +247,8 @@ class MakeNewUser extends Component {
           </Text>
           <TextInput
             style={styles.entry}
-            onChangeText={text => this.changeText(text, 'password_confirm')}
+            secureTextEntry={true}
+            onChangeText={text => this.changeText(text, 'confirm')}
           />
                                         </View> : null}
 

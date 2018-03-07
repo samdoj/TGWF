@@ -53,7 +53,8 @@ export default class Contribute extends Component {
           alert('Your article was submitted successfully');
           console.log('text ');
           text = await response.text().then(text=>text);
-          console.dir(text);
+          global.lastPostID = text;
+
         }).catch((err)=>alert(err));
 
       // return;

@@ -24,7 +24,7 @@ class WebsiteView extends Component
 
 ref = "WebView"
 source = {{ uri: this.state.uri }}
-  scalesPageToFit = {Platform.OS === 'ios' || true}
+  scalesPageToFit = {true}
 javascriptEnabled = {true}
 initialScale="10%"
 style={{ width: '100%', height: '100%' }}

@@ -8,7 +8,7 @@ import userReducer from './redux/reducers/user';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import Donation from './Screens/Donation';
-import Navigator from './Components/Navigator/Navigator';
+import Navigator from './Components/Navigators/TabNavigator';
 
 // noinspection JSAnnotator
 
